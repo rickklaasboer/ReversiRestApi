@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ReversieISpelImplementatie.Model
+﻿namespace ReversieISpelImplementatie.Model
 {
-    public enum Kleur { Geen, Wit, Zwart };
+    public enum Kleur
+    {
+        Geen,
+        Wit,
+        Zwart
+    }
 
     public interface ISpel
     {
