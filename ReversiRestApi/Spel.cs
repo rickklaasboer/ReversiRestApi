@@ -1,6 +1,7 @@
 ﻿using System;
+using Newtonsoft.Json;
 
-namespace ReversieISpelImplementatie.Model
+namespace ReversiRestApi
 {
     public class Spel : ISpel
     {
@@ -227,6 +228,11 @@ namespace ReversieISpelImplementatie.Model
             }
 
             return stenenOmgedraaid;
+        }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
         }
     }
 }
