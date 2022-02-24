@@ -18,7 +18,7 @@ namespace ReversiRestApi
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
                 .ConfigureServices(services =>
                 {
-                    services.AddScoped<ISpelRepository, SpelRepository>();
+                    services.AddScoped<IGameRepository, GameRepository>();
                 });
         }
     }

@@ -3,12 +3,12 @@ using System.Linq;
 
 namespace ReversiRestApi.Repositories
 {
-    public class SpelRepository : ISpelRepository
+    public class GameRepository : IGameRepository
     {
         // Lijst met tijdelijke spellen
         public List<Game> Spellen { get; set; }
 
-        public SpelRepository()
+        public GameRepository()
         {
             Game spel1 = new Game();
             Game spel2 = new Game();
