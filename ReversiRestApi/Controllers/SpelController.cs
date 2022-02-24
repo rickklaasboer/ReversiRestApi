@@ -19,36 +19,13 @@ namespace ReversiRestApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<string>> GetSpelOmschrijvingenVanSpellenMetWachtendeSpeler()
+        public IActionResult Index()
         {
-            var results = _repository.GetSpellen()
-                .Where((s) => s.Speler2Token == null)
-                .Select((s) => s.Omschrijving);
-
-            return new ActionResult<IEnumerable<string>>(results);
+            return null;
         }
 
-        [HttpPost]
-        public IActionResult MaakSpel([FromBody] SpelPostDataTransferObject body)
-        {
-            if (body.Omschrijving == null || body.Speler1Token == null)
-            {
-                return BadRequest();
-            }
-
-            var spel = new Spel
-            {
-                Token = Guid.NewGuid().ToString(),
-                Speler1Token = body.Speler1Token,
-                Omschrijving = body.Omschrijving,
-            };
-            _repository.AddSpel(spel);
-            
-            return Ok(spel.ToString());
-        }
-        
-        [HttpGet("{token}")]
-        public IActionResult GetSpel(string token)
+        [HttpGet("/{token}")]
+        public IActionResult Get(string token)
         {
             try
             {
@@ -59,6 +36,49 @@ namespace ReversiRestApi.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        [HttpGet("/player/{token}")]
+        public IActionResult GetByPlayer()
+        {
+            return null;
+        }
+
+        [HttpGet("/turn")]
+        public IActionResult GetTurn()
+        {
+            return null;
+        }
+
+        [HttpPut("/turn")]
+        public IActionResult ExecuteTurn()
+        {
+            return null;
+        }
+
+        [HttpPut("/turn/abandon")]
+        public IActionResult AbandonTurn()
+        {
+            return null;
+        }
+
+        [HttpPost]
+        public IActionResult Create([FromBody] SpelPostDataTransferObject body)
+        {
+            if (body.Omschrijving == null || body.Speler1Token == null)
+            {
+                return BadRequest();
+            }
+
+            var spel = new Game
+            {
+                Token = Guid.NewGuid().ToString(),
+                Player1Token = body.Speler1Token,
+                Description = body.Omschrijving,
+            };
+            _repository.AddSpel(spel);
+
+            return Ok(spel.ToString());
         }
     }
 }
