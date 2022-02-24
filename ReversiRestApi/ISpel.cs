@@ -1,4 +1,4 @@
-﻿namespace ReversieISpelImplementatie.Model
+﻿namespace ReversiRestApi
 {
     public enum Kleur
     {

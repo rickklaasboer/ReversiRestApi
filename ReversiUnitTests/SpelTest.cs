@@ -1,8 +1,8 @@
 using System;
 using NUnit.Framework;
-using ReversieISpelImplementatie.Model;
+using ReversiRestApi;
 
-namespace NUnitTestProjectReversiSpel
+namespace ReversiUnitTests
 {
     [TestFixture]
     public class SpelTest
