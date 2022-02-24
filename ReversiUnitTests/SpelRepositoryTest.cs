@@ -11,10 +11,10 @@ namespace ReversiUnitTests
         public void SpelRepositorty_AddSpel_Voegt_Spel_Toe()
         {
             var respository = new SpelRepository();
-            var spel = new Spel
+            var spel = new Game
             {
                 ID = -1,
-                Omschrijving = "Test 1",
+                Description = "Test 1",
                 Token = "Test_1_Token"
             };
 
@@ -29,17 +29,17 @@ namespace ReversiUnitTests
             var respository = new SpelRepository();
 
             Assert.NotNull(respository.GetSpellen());
-            Assert.IsInstanceOf<List<Spel>>(respository.GetSpellen());
+            Assert.IsInstanceOf<List<Game>>(respository.GetSpellen());
         }
 
         [Test]
         public void SpelRepositorty_GetSpel_Haalt_Spel_Op()
         {
             var respository = new SpelRepository();
-            var spel = new Spel
+            var spel = new Game
             {
                 ID = -1,
-                Omschrijving = "Test 1",
+                Description = "Test 1",
                 Token = "Test_1_Token"
             };
 

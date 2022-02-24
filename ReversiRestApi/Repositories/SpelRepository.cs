@@ -6,36 +6,36 @@ namespace ReversiRestApi.Repositories
     public class SpelRepository : ISpelRepository
     {
         // Lijst met tijdelijke spellen
-        public List<Spel> Spellen { get; set; }
+        public List<Game> Spellen { get; set; }
 
         public SpelRepository()
         {
-            Spel spel1 = new Spel();
-            Spel spel2 = new Spel();
-            Spel spel3 = new Spel();
+            Game spel1 = new Game();
+            Game spel2 = new Game();
+            Game spel3 = new Game();
             
-            spel1.Speler1Token = "abcdef";
-            spel1.Omschrijving = "Potje snel reveri, dus niet lang nadenken";
-            spel2.Speler1Token = "ghijkl";
-            spel2.Speler2Token = "mnopqr";
-            spel2.Omschrijving = "Ik zoek een gevorderde tegenspeler!";
-            spel3.Speler1Token = "stuvwx";
-            spel3.Omschrijving = "Na dit spel wil ik er nog een paar spelen tegen zelfde tegenstander";
+            spel1.Player1Token = "abcdef";
+            spel1.Description = "Potje snel reveri, dus niet lang nadenken";
+            spel2.Player1Token = "ghijkl";
+            spel2.Player2Token = "mnopqr";
+            spel2.Description = "Ik zoek een gevorderde tegenspeler!";
+            spel3.Player1Token = "stuvwx";
+            spel3.Description = "Na dit spel wil ik er nog een paar spelen tegen zelfde tegenstander";
 
-            Spellen = new List<Spel> { spel1, spel2, spel3 };
+            Spellen = new List<Game> { spel1, spel2, spel3 };
         }
 
-        public void AddSpel(Spel spel)
+        public void AddSpel(Game game)
         {
-            Spellen.Add(spel);
+            Spellen.Add(game);
         }
 
-        public List<Spel> GetSpellen()
+        public List<Game> GetSpellen()
         {
             return Spellen;
         }
 
-        public Spel GetSpel(string spelToken)
+        public Game GetSpel(string spelToken)
         {
             return Spellen.First(s => s.Token == spelToken);
         }
