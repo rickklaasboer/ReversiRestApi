@@ -10,7 +10,7 @@ namespace ReversiUnitTests
         [Test]
         public void SpelRepositorty_AddSpel_Voegt_Spel_Toe()
         {
-            var respository = new SpelRepository();
+            var respository = new GameRepository();
             var spel = new Game
             {
                 ID = -1,
@@ -26,7 +26,7 @@ namespace ReversiUnitTests
         [Test]
         public void SpelRepositorty_GetSpellen_Haalt_Alle_Spellen_Op()
         {
-            var respository = new SpelRepository();
+            var respository = new GameRepository();
 
             Assert.NotNull(respository.GetSpellen());
             Assert.IsInstanceOf<List<Game>>(respository.GetSpellen());
@@ -35,7 +35,7 @@ namespace ReversiUnitTests
         [Test]
         public void SpelRepositorty_GetSpel_Haalt_Spel_Op()
         {
-            var respository = new SpelRepository();
+            var respository = new GameRepository();
             var spel = new Game
             {
                 ID = -1,

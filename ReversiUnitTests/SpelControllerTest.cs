@@ -3,8 +3,8 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using ReversiRestApi;
 using ReversiRestApi.Controllers;
-using ReversiRestApi.DTO;
 using ReversiRestApi.Repositories;
+using ReversiRestApi.Requests.Game;
 
 namespace ReversiUnitTests
 {
@@ -13,13 +13,13 @@ namespace ReversiUnitTests
         [Test]
         public void SpelController_MaakSpel_Maakt_Spel()
         {
-            var repository = new SpelRepository();
-            var controller = new SpelController(repository);
+            var repository = new GameRepository();
+            var controller = new GameController(repository);
 
-            var response = controller.Create(new SpelPostDataTransferObject
+            var response = controller.Create(new CreateGameRequest()
             {
-                Omschrijving = "Test",
-                Speler1Token = "Test"
+                Description = "Test",
+                Player1Token = "Test"
             });
 
             var actualResult = (OkObjectResult)response;
@@ -31,8 +31,8 @@ namespace ReversiUnitTests
         [Test]
         public void SpelController_GetSpel_Verkrijgt_Spel()
         {
-            var repository = new SpelRepository();
-            var controller = new SpelController(repository);
+            var repository = new GameRepository();
+            var controller = new GameController(repository);
 
 
             var spel = new Game()

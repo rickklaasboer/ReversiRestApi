@@ -2,7 +2,7 @@
 
 namespace ReversiRestApi.Repositories
 {
-    public interface ISpelRepository
+    public interface IGameRepository
     {
         void AddSpel(Game game);
 
