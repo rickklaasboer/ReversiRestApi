@@ -9,7 +9,7 @@
 
     public interface IGame
     {
-        int ID { get; set; }
+        // int ID { get; set; }
         string Description { get; set; }
 
         //het unieke token van het spel

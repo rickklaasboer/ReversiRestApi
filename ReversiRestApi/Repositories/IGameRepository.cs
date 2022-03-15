@@ -4,10 +4,10 @@ namespace ReversiRestApi.Repositories
 {
     public interface IGameRepository
     {
-        void AddSpel(Game game);
+        void AddGame(Game game);
 
-        public List<Game> GetSpellen();
+        public List<Game> GetGames();
 
-        Game GetSpel(string spelToken);
+        Game GetGame(string token);
     }
 }

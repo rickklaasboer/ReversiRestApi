@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
 namespace ReversiRestApi
@@ -33,10 +34,13 @@ namespace ReversiRestApi
 
             PlayerTurn = Color.None;
         }
-
-        public int ID { get; set; }
-        public string Description { get; set; }
+        
+        [Key]
         public string Token { get; set; }
+
+        // public int ID { get; set; }
+        public string Description { get; set; }
+        
         public string Player1Token { get; set; }
         public string Player2Token { get; set; }
 
