@@ -13,14 +13,14 @@ namespace ReversiUnitTests
             var respository = new GameRepository();
             var spel = new Game
             {
-                ID = -1,
+                // ID = -1,
                 Description = "Test 1",
                 Token = "Test_1_Token"
             };
 
-            respository.AddSpel(spel);
+            respository.AddGame(spel);
 
-            Assert.AreEqual(spel, respository.GetSpel("Test_1_Token"));
+            Assert.AreEqual(spel, respository.GetGame("Test_1_Token"));
         }
         
         [Test]
@@ -28,8 +28,8 @@ namespace ReversiUnitTests
         {
             var respository = new GameRepository();
 
-            Assert.NotNull(respository.GetSpellen());
-            Assert.IsInstanceOf<List<Game>>(respository.GetSpellen());
+            Assert.NotNull(respository.GetGames());
+            Assert.IsInstanceOf<List<Game>>(respository.GetGames());
         }
 
         [Test]
@@ -38,14 +38,14 @@ namespace ReversiUnitTests
             var respository = new GameRepository();
             var spel = new Game
             {
-                ID = -1,
+                // ID = -1,
                 Description = "Test 1",
                 Token = "Test_1_Token"
             };
 
-            respository.AddSpel(spel);
+            respository.AddGame(spel);
 
-            Assert.AreEqual(spel, respository.GetSpel("Test_1_Token"));
+            Assert.AreEqual(spel, respository.GetGame("Test_1_Token"));
         }
         
     }

@@ -25,7 +25,7 @@ namespace ReversiUnitTests
             var actualResult = (OkObjectResult)response;
             dynamic spel = JsonConvert.DeserializeObject((string)actualResult.Value);
 
-            Assert.AreEqual(actualResult.Value, JsonConvert.SerializeObject(repository.GetSpel((string)spel.Token)));
+            Assert.AreEqual(actualResult.Value, JsonConvert.SerializeObject(repository.GetGame((string)spel.Token)));
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace ReversiUnitTests
             {
                 Token = "kaas",
             };
-            repository.AddSpel(spel);
+            repository.AddGame(spel);
 
             var response = controller.Get("kaas");
 
