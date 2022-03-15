@@ -25,17 +25,17 @@ namespace ReversiRestApi.Repositories
             Spellen = new List<Game> { spel1, spel2, spel3 };
         }
 
-        public void AddSpel(Game game)
+        public void AddGame(Game game)
         {
             Spellen.Add(game);
         }
 
-        public List<Game> GetSpellen()
+        public List<Game> GetGames()
         {
             return Spellen;
         }
 
-        public Game GetSpel(string spelToken)
+        public Game GetGame(string spelToken)
         {
             return Spellen.First(s => s.Token == spelToken);
         }

@@ -15,11 +15,7 @@ namespace ReversiRestApi
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
-                .ConfigureServices(services =>
-                {
-                    services.AddScoped<IGameRepository, GameRepository>();
-                });
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
         }
     }
 }

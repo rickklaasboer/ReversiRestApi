@@ -25,7 +25,7 @@ namespace ReversiRestApi.Controllers
         {
             try
             {
-                var result = _repository.GetSpellen()
+                var result = _repository.GetGames()
                     .Where(s => s.Player1Token == null || s.Player2Token == null);
                 return JsonResponse(result);
             }
@@ -44,7 +44,7 @@ namespace ReversiRestApi.Controllers
         {
             try
             {
-                var result = _repository.GetSpel(token);
+                var result = _repository.GetGame(token);
                 return JsonResponse(result);
             }
             catch (Exception)
@@ -62,7 +62,7 @@ namespace ReversiRestApi.Controllers
             try
             {
                 var result = _repository
-                    .GetSpellen()
+                    .GetGames()
                     .First(s => s.Player1Token == token || s.Player2Token == token);
                 return JsonResponse(result);
             }
@@ -80,7 +80,7 @@ namespace ReversiRestApi.Controllers
         {
             try
             {
-                var result = _repository.GetSpel(token);
+                var result = _repository.GetGame(token);
                 return JsonResponse(new
                 {
                     Color = result.PlayerTurn
@@ -109,7 +109,7 @@ namespace ReversiRestApi.Controllers
                 Player1Token = request.Player1Token,
                 Description = request.Description,
             };
-            _repository.AddSpel(game);
+            _repository.AddGame(game);
 
             return JsonResponse(game);
         }
@@ -122,7 +122,7 @@ namespace ReversiRestApi.Controllers
         {
             try
             {
-                var result = _repository.GetSpel(request.GameToken);
+                var result = _repository.GetGame(request.GameToken);
                 // TODO: check if player that calls is actually the player who's turn it is
                 result.MakeMove(request.Position.row, request.Position.column);
                 
@@ -145,7 +145,7 @@ namespace ReversiRestApi.Controllers
         {
             try
             {
-                var result = _repository.GetSpel(request.GameToken);
+                var result = _repository.GetGame(request.GameToken);
                 // TODO: check if player that calls is actually the player who's turn it is
                 result.Skip();
                 
