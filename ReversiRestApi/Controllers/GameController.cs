@@ -29,7 +29,7 @@ namespace ReversiRestApi.Controllers
                     .Where(s => s.Player1Token == null || s.Player2Token == null);
                 return JsonResponse(result);
             }
-            catch
+            catch (Exception e)
             {
                 return BadRequest();
             }
@@ -39,7 +39,7 @@ namespace ReversiRestApi.Controllers
         /// Get game by token
         /// </summary>
         /// <param name="token"></param>
-        [HttpGet("/{token}")]
+        [HttpGet("{token}")]
         public IActionResult Get(string token)
         {
             try

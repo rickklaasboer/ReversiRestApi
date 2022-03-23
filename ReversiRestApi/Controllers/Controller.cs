@@ -7,7 +7,8 @@ namespace ReversiRestApi.Controllers
     {
         public IActionResult JsonResponse(object input)
         {
-            return Ok(JsonConvert.SerializeObject(input));
+            Response.Headers.Add("Content-Type", "application/json");
+            return Ok(input);
         }
     }
 }
