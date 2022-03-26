@@ -117,30 +117,35 @@ namespace ReversiRestApi.Controllers
         /// <summary>
         /// Let player do a turn
         /// </summary>
-        [HttpPut("/turn")]
+        [HttpPut("turn")]
         public IActionResult DoTurn([FromBody] DoTurnRequest request)
         {
             try
             {
                 var result = _repository.GetGame(request.GameToken);
-                // TODO: check if player that calls is actually the player who's turn it is
-                result.MakeMove(request.Position.row, request.Position.column);
-                
-                return JsonResponse(new
+
+                if (result.PlayerTurn == Color.None)
                 {
-                    Success = true
-                });
+                    result.PlayerTurn = Color.White;
+                }
+
+                // TODO: check if player that calls is actually the player who's turn it is
+                result.MakeMove(request.Row, request.Column);
+
+                _repository.UpdateGame(result);
+
+                return JsonResponse(result);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return BadRequest();
+                return BadRequest(e);
             }
         }
 
         /// <summary>
         /// Let player skip a turn (if allowed)
         /// </summary>
-        [HttpPut("/turn/abandon")]
+        [HttpPut("turn/abandon")]
         public IActionResult AbandonTurn([FromBody] AbandonTurnRequest request)
         {
             try
@@ -148,15 +153,14 @@ namespace ReversiRestApi.Controllers
                 var result = _repository.GetGame(request.GameToken);
                 // TODO: check if player that calls is actually the player who's turn it is
                 result.Skip();
-                
-                return JsonResponse(new
-                {
-                    Success = true
-                });
+
+                _repository.UpdateGame(result);
+
+                return JsonResponse(result);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return BadRequest();
+                return BadRequest(e);
             }
         }
     }

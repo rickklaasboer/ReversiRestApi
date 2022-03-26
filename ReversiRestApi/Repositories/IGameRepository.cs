@@ -9,5 +9,7 @@ namespace ReversiRestApi.Repositories
         public List<Game> GetGames();
 
         Game GetGame(string token);
+
+        void UpdateGame(Game game);
     }
 }

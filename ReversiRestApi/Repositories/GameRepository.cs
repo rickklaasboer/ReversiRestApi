@@ -39,5 +39,10 @@ namespace ReversiRestApi.Repositories
         {
             return Spellen.First(s => s.Token == spelToken);
         }
+
+        public void UpdateGame(Game game)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

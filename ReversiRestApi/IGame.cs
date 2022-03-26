@@ -23,7 +23,7 @@
         bool Finished();
 
         //welke kleur het meest voorkomend op het speelbord
-        Color ConsideringColor();
+        Color WinningColor();
 
         //controle of op een bepaalde positie een zet mogelijk is
         bool MoveIsPossible(int row, int col);

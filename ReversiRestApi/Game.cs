@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
 namespace ReversiRestApi
@@ -48,6 +49,12 @@ namespace ReversiRestApi
 
         public Color PlayerTurn { get; set; }
 
+        [NotMapped]
+        public bool IsFinished => Finished();
+
+        [NotMapped]
+        public Color Winner => WinningColor();
+
         public void Skip()
         {
             // Check that no move is possible for the player who wants to pass before switching turns.
@@ -66,8 +73,13 @@ namespace ReversiRestApi
             return !(CanDoValidMove(Color.White) && CanDoValidMove(Color.Black));
         }
 
-        public Color ConsideringColor()
+        public Color WinningColor()
         {
+            if (!Finished())
+            {
+                return Color.None;
+            }
+
             var white = 0;
             var black = 0;
             for (var row = 0; row < Scope; row++)

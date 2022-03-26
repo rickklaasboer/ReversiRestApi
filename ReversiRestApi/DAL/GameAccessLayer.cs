@@ -29,5 +29,11 @@ namespace ReversiRestApi.DAL
         {
             return _context.Games.First(x => x.Token == token);
         }
+
+        public void UpdateGame(Game game)
+        {
+            _context.Games.Update(game);
+            _context.SaveChanges();
+        }
     }
 }

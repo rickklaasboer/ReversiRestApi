@@ -1676,7 +1676,7 @@ namespace ReversiUnitTests
             // 7   0 0 0 0 0 0 0 0
             //                     
             // Act
-            var actual = spel.ConsideringColor();
+            var actual = spel.WinningColor();
             // Assert
             Assert.AreEqual(Color.None, actual);
         }
@@ -1704,7 +1704,7 @@ namespace ReversiUnitTests
             // 7   0 0 0 0 0 0 0 0
             //                     
             // Act
-            var actual = spel.ConsideringColor();
+            var actual = spel.WinningColor();
             // Assert
             Assert.AreEqual(Color.Black, actual);
         }
@@ -1733,7 +1733,7 @@ namespace ReversiUnitTests
             // 7   0 0 0 0 0 0 0 0
             //                     
             // Act
-            var actual = spel.ConsideringColor();
+            var actual = spel.WinningColor();
             // Assert
             Assert.AreEqual(Color.White, actual);
         }
