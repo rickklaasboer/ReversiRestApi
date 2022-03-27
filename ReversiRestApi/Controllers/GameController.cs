@@ -26,6 +26,7 @@ namespace ReversiRestApi.Controllers
             try
             {
                 var result = _repository.GetGames()
+                    .Where(s => !s.IsFinished)
                     .Where(s => s.Player1Token == null || s.Player2Token == null);
                 return JsonResponse(result);
             }
@@ -115,6 +116,71 @@ namespace ReversiRestApi.Controllers
         }
 
         /// <summary>
+        /// Join a game
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPut("{token}/join")]
+        public IActionResult Join(string token, [FromBody] JoinGameRequest request)
+        {
+            var game = _repository.GetGame(token);
+
+            if (game.Player1Token == request.PlayerToken || game.Player2Token == request.PlayerToken)
+            {
+                return JsonResponse(game);
+            }
+
+            if (!(game.Player1Token == null || game.Player2Token == null))
+            {
+                return BadRequest("This game is full");
+            }
+
+            if (game.Player1Token == null)
+            {
+                game.Player1Token = request.PlayerToken;
+            }
+            else
+            {
+                game.Player2Token = request.PlayerToken;
+            }
+
+            _repository.UpdateGame(game);
+
+            return JsonResponse(game);
+        }
+
+        /// <summary>
+        /// Leave a game
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPut("{token}/leave")]
+        public IActionResult Leave(string token, [FromBody] LeaveGameRequest request)
+        {
+            var game = _repository.GetGame(token);
+
+            if (!(game.Player1Token == request.PlayerToken || game.Player2Token == request.PlayerToken))
+            {
+                return BadRequest("You are not in this game");
+            }
+
+            if (game.Player1Token == request.PlayerToken)
+            {
+                game.Player1Token = null;
+            }
+            else
+            {
+                game.Player2Token = null;
+            }
+
+            _repository.UpdateGame(game);
+
+            return JsonResponse(game);
+        }
+
+        /// <summary>
         /// Let player do a turn
         /// </summary>
         [HttpPut("turn")]
@@ -129,8 +195,15 @@ namespace ReversiRestApi.Controllers
                     result.PlayerTurn = Color.White;
                 }
 
-                // TODO: check if player that calls is actually the player who's turn it is
-                result.MakeMove(request.Row, request.Column);
+                if (request.PlayerToken == result.Player1Token && result.PlayerTurn == Color.White)
+                {
+                    result.MakeMove(request.Row, request.Column);
+                }
+                
+                if (request.PlayerToken == result.Player2Token && result.PlayerTurn == Color.Black)
+                {
+                    result.MakeMove(request.Row, request.Column);
+                }
 
                 _repository.UpdateGame(result);
 
