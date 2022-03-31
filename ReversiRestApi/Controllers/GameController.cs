@@ -166,6 +166,9 @@ namespace ReversiRestApi.Controllers
         {
             var game = _repository.GetGame(token);
 
+            // Cancel leave when game is finished
+            if (game.DidFinish) return JsonResponse(game);
+
             if (!(game.Player1Token == request.PlayerToken || game.Player2Token == request.PlayerToken))
             {
                 return BadRequest("You are not in this game");
