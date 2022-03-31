@@ -25,6 +25,12 @@
         //welke kleur het meest voorkomend op het speelbord
         Color WinningColor();
 
+        public bool DidFinish { get; set; }
+        
+        public string WinningPlayer { get; set; }
+        
+        public Color WinningPlayerColor { get; set; }
+        
         //controle of op een bepaalde positie een zet mogelijk is
         bool MoveIsPossible(int row, int col);
         void MakeMove(int row, int col);

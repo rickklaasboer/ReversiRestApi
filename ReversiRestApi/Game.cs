@@ -11,14 +11,14 @@ namespace ReversiRestApi
 
         private readonly int[,] _direction = new int[8, 2]
         {
-            { 0, 1 }, // right
-            { 0, -1 }, // left
-            { 1, 0 }, // down
-            { -1, 0 }, // up
-            { 1, 1 }, // to bottom right
-            { 1, -1 }, // to bottom left
-            { -1, 1 }, // to top right
-            { -1, -1 } // to top left
+            {0, 1}, // right
+            {0, -1}, // left
+            {1, 0}, // down
+            {-1, 0}, // up
+            {1, 1}, // to bottom right
+            {1, -1}, // to bottom left
+            {-1, 1}, // to top right
+            {-1, -1} // to top left
         };
 
         public Game()
@@ -35,13 +35,12 @@ namespace ReversiRestApi
 
             PlayerTurn = Color.None;
         }
-        
-        [Key]
-        public string Token { get; set; }
+
+        [Key] public string Token { get; set; }
 
         // public int ID { get; set; }
         public string Description { get; set; }
-        
+
         public string Player1Token { get; set; }
         public string Player2Token { get; set; }
 
@@ -49,11 +48,15 @@ namespace ReversiRestApi
 
         public Color PlayerTurn { get; set; }
 
-        [NotMapped]
-        public bool IsFinished => Finished();
+        public bool DidFinish { get; set; }
 
-        [NotMapped]
-        public Color Winner => WinningColor();
+        public string WinningPlayer { get; set; }
+
+        public Color WinningPlayerColor { get; set; }
+
+        [NotMapped] public bool IsFinished => DidFinish;
+
+        [NotMapped] public Color Winner => WinningPlayerColor;
 
         public void Skip()
         {
@@ -75,10 +78,7 @@ namespace ReversiRestApi
 
         public Color WinningColor()
         {
-            if (!Finished())
-            {
-                return Color.None;
-            }
+            if (!Finished()) return Color.None;
 
             var white = 0;
             var black = 0;

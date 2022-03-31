@@ -26,13 +26,13 @@ namespace ReversiRestApi.Controllers
             try
             {
                 var result = _repository.GetGames()
-                    .Where(s => !s.IsFinished)
+                    .Where(s => !s.DidFinish)
                     .Where(s => s.Player1Token == null || s.Player2Token == null);
                 return JsonResponse(result);
             }
             catch (Exception e)
             {
-                return BadRequest();
+                return BadRequest(e);
             }
         }
 
@@ -126,6 +126,11 @@ namespace ReversiRestApi.Controllers
         {
             var game = _repository.GetGame(token);
 
+            if (game.DidFinish)
+            {
+                return BadRequest();
+            }
+
             if (game.Player1Token == request.PlayerToken || game.Player2Token == request.PlayerToken)
             {
                 return JsonResponse(game);
@@ -188,26 +193,40 @@ namespace ReversiRestApi.Controllers
         {
             try
             {
-                var result = _repository.GetGame(request.GameToken);
+                var game = _repository.GetGame(request.GameToken);
 
-                if (result.PlayerTurn == Color.None)
+                if (game.Finished())
                 {
-                    result.PlayerTurn = Color.White;
+                    var winningPlayerColor = game.WinningColor();
+
+                    game.DidFinish = true;
+                    game.WinningPlayerColor = winningPlayerColor;
+                    game.WinningPlayer = winningPlayerColor switch
+                    {
+                        Color.None => null,
+                        Color.White => game.Player1Token,
+                        _ => game.Player2Token
+                    };
                 }
 
-                if (request.PlayerToken == result.Player1Token && result.PlayerTurn == Color.White)
+                if (game.PlayerTurn == Color.None)
                 {
-                    result.MakeMove(request.Row, request.Column);
-                }
-                
-                if (request.PlayerToken == result.Player2Token && result.PlayerTurn == Color.Black)
-                {
-                    result.MakeMove(request.Row, request.Column);
+                    game.PlayerTurn = Color.White;
                 }
 
-                _repository.UpdateGame(result);
+                if (request.PlayerToken == game.Player1Token && game.PlayerTurn == Color.White)
+                {
+                    game.MakeMove(request.Row, request.Column);
+                }
 
-                return JsonResponse(result);
+                if (request.PlayerToken == game.Player2Token && game.PlayerTurn == Color.Black)
+                {
+                    game.MakeMove(request.Row, request.Column);
+                }
+
+                _repository.UpdateGame(game);
+
+                return JsonResponse(game);
             }
             catch (Exception e)
             {
@@ -223,13 +242,24 @@ namespace ReversiRestApi.Controllers
         {
             try
             {
-                var result = _repository.GetGame(request.GameToken);
-                // TODO: check if player that calls is actually the player who's turn it is
-                result.Skip();
+                var game = _repository.GetGame(request.GameToken);
 
-                _repository.UpdateGame(result);
+                if (!game.DidFinish)
+                {
+                    if (request.PlayerToken == game.Player1Token && game.PlayerTurn == Color.White)
+                    {
+                        game.Skip();
+                    }
 
-                return JsonResponse(result);
+                    if (request.PlayerToken == game.Player2Token && game.PlayerTurn == Color.Black)
+                    {
+                        game.Skip();
+                    }
+                }
+
+                _repository.UpdateGame(game);
+
+                return JsonResponse(game);
             }
             catch (Exception e)
             {
