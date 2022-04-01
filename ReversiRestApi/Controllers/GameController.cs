@@ -198,18 +198,9 @@ namespace ReversiRestApi.Controllers
             {
                 var game = _repository.GetGame(request.GameToken);
 
-                if (game.Finished())
+                if (game.DidFinish)
                 {
-                    var winningPlayerColor = game.WinningColor();
-
-                    game.DidFinish = true;
-                    game.WinningPlayerColor = winningPlayerColor;
-                    game.WinningPlayer = winningPlayerColor switch
-                    {
-                        Color.None => null,
-                        Color.White => game.Player1Token,
-                        _ => game.Player2Token
-                    };
+                    return JsonResponse(game);
                 }
 
                 if (game.PlayerTurn == Color.None)
@@ -225,6 +216,20 @@ namespace ReversiRestApi.Controllers
                 if (request.PlayerToken == game.Player2Token && game.PlayerTurn == Color.Black)
                 {
                     game.MakeMove(request.Row, request.Column);
+                }
+                
+                if (game.Finished())
+                {
+                    var winningPlayerColor = game.WinningColor();
+
+                    game.DidFinish = true;
+                    game.WinningPlayerColor = winningPlayerColor;
+                    game.WinningPlayer = winningPlayerColor switch
+                    {
+                        Color.None => null,
+                        Color.White => game.Player1Token,
+                        _ => game.Player2Token
+                    };
                 }
 
                 _repository.UpdateGame(game);

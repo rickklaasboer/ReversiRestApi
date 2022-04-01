@@ -73,7 +73,7 @@ namespace ReversiRestApi
         public bool Finished()
         {
             // True if none of the players can make a move
-            return !(CanDoValidMove(Color.White) && CanDoValidMove(Color.Black));
+            return !(CanDoValidMove(Color.White) || CanDoValidMove(Color.Black));
         }
 
         public Color WinningColor()
